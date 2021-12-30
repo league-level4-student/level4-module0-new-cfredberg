@@ -15,7 +15,34 @@ public class EncapsulationDemo {
      */
 
     public static void main(String[] args) {
-
+    	Car car = new Car(1000.1, 0.1, "Red", 1);
+    	SUV suv = new SUV(1000.1, 0.1, "Black", 1, 100);
+    	System.out.println("Your car has " + car.getFuelInTank() + " gallons left in the tank, with a capacity of " + car.getTankCapacity() + " gallons.");
+    	System.out.println("Let's add " + (car.getTankCapacity() - car.getFuelInTank()) + " gallons to the tank to make it full.");
+    	car.setFuelInTank(car.getTankCapacity());
+    	System.out.println("Your tank is now full at " + car.getFuelInTank() + " gallons.");
+    	System.out.println("Drive until we are out of gas:");
+    	while (car.getFuelInTank() > 0) {
+    		car.drive();
+    	}
+    	car.drive();
+    	System.out.println("Your SUV has " + suv.getFuelInTank() + " gallons left in the tank, with a capacity of " + suv.getTankCapacity() + " gallons.");
+    	System.out.println("It also has " + suv.getNumSeats() + " seats in the vehicle.");
+    	System.out.println("Let's add " + (suv.getTankCapacity() - suv.getFuelInTank()) + " gallons to the tank to make it full.");
+    	suv.setFuelInTank(suv.getTankCapacity());
+    	System.out.println("Your tank is now full at " + suv.getFuelInTank() + " gallons.");
+    	System.out.println("Let's drive on the street:");
+    	while (suv.getFuelInTank() > 0) {
+    		suv.drive();
+    	}
+    	suv.drive();
+    	System.out.println("Let's refuel...");
+    	suv.setFuelInTank(suv.getTankCapacity());
+    	System.out.println("and drive offroad:");
+    	while (suv.getFuelInTank() > 0) {
+    		suv.drive();
+    	}
+    	suv.drive();
     }
 
 }
@@ -92,7 +119,10 @@ class Car {
      */
 
     public void setFuelInTank(double fuelInTank) {
-
+    	if (fuelInTank < 0) {
+    		fuelInTank = 0;
+    	}
+    	
         if (fuelInTank >= 0 && fuelInTank <= tankCapacity) {
 
             this.fuelInTank = fuelInTank;

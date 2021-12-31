@@ -30,5 +30,30 @@ public class EncapsulateTheData {
      */
 
     Object memberObj;
-
+    
+    public void setItemsReceived(int num) {
+    	if (num > 0) {
+    		itemsReceived = num;
+    	}else {
+    		itemsReceived = 0;
+    	}
+    }
+    
+    public int getItemsReceived() {
+    	return itemsReceived;
+    }
+    
+    public void setDegreesTurned(Double num) {
+    	if (num > 360) {
+    		degreesTurned = 360;
+    	}else if (num < 0) {
+    		degreesTurned = 0;
+    	}else {
+    		degreesTurned = num;
+    	}
+    }
+    
+    public Double getDegreesTurned() {
+    	return degreesTurned;
+    }
 }

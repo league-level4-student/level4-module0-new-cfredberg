@@ -7,7 +7,7 @@ public class EncapsulateTheData {
      * itemsReceived to 0.
      */
 
-    int itemsReceived;
+    private int itemsReceived;
 
     /*
      * degreesTurned must be locked between 0.0 and 360.0 inclusive. All
@@ -15,21 +15,21 @@ public class EncapsulateTheData {
      * bound.
      */
 
-    double degreesTurned;
+    private double degreesTurned;
 
     /*
      * nomenclature must not contain an empty String. An empty String parameter
      * should set nomenclature to a String with a single space.
      */
 
-    String nomenclature;
+    private String nomenclature;
 
     /*
      * memberObj must not be a String. A String parameter should set memberObj
      * to a new Object(); Hint: Use the instanceof operator.
      */
 
-    Object memberObj;
+    private Object memberObj;
     
     public void setItemsReceived(int num) {
     	if (num > 0) {
@@ -55,5 +55,29 @@ public class EncapsulateTheData {
     
     public Double getDegreesTurned() {
     	return degreesTurned;
+    }
+    
+    public void setNomenclature(String str) {
+    	if (str.equals("")) {
+    		nomenclature = " ";
+    	}else {
+    		nomenclature = str;
+    	}
+    }
+    
+    public String getNomenclature() {
+    	return nomenclature;
+    }
+    
+    public void setMemberObj(Object obj) {
+    	if (obj instanceof String) {
+    		memberObj = new Object();
+    	}else {
+    		memberObj = obj;
+    	}
+    }
+    
+    public Object getMemberObj() {
+    	return memberObj;
     }
 }

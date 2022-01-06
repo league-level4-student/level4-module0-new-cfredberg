@@ -9,16 +9,23 @@ public class DataTypeOptionPane {
         
         dataTypes = DataType.values();
         
-        int response = JOptionPane.showOptionDialog(null, "Please select the data type that you would like\n                         to learn about.", "Your Choice", 0, 3, null, dataTypes, 0);
+        int response = JOptionPane.showOptionDialog(null, "            Please select the data type that you would like\n                                     to learn about.", "Your Choice", 0, JOptionPane.PLAIN_MESSAGE, null, dataTypes, 0);
         
         switch (response) {
-        case 8:
+        case 0:
+        	JOptionPane.showMessageDialog(null, "A char can contain only one character.  A character is any letter, lower or upper case, or any single digit number.  A char is made up of " + DataType.CHAR.getBits() + " bits.");
         	break;
-        case 16:
+        case 1:
+        	JOptionPane.showMessageDialog(null, "The biggest number a short can contain is 32,767 .  It is made up of " + DataType.SHORT.getBits() + " bits.");
         	break;
-        case 32:
+        case 2:
+        	JOptionPane.showMessageDialog(null, "The biggest number an int can contain is 2,147,483,647.  An int is made up of " + DataType.INT.getBits() + " bits.");
         	break;
-        case 64:
+        case 3:
+        	JOptionPane.showMessageDialog(null, "The biggest number a long can contain is 9,223,372,036,854,775,807.  A long is made up of " + DataType.LONG.getBits() + " bits.");
+        	break;
+        case 4:
+        	JOptionPane.showMessageDialog(null, "The biggest number a double can reliably contain is 2^53. It can hold not only integers, but also decimal numbers.  A double is made up of " + DataType.DOUBLE.getBits() + " bits.");
         	break;
         }
         	

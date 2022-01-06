@@ -103,7 +103,20 @@ public class SnakeGame implements ActionListener, KeyListener {
          * 
          * If an arrow key is pressed, set the snake's direction accordingly.
          */
-        
+        switch (e.getKeyCode()) {
+        case KeyEvent.VK_UP:
+        	snake.setDirection(Direction.UP);
+        	break;
+        case KeyEvent.VK_DOWN:
+        	snake.setDirection(Direction.DOWN);
+        	break;
+        case KeyEvent.VK_LEFT:
+        	snake.setDirection(Direction.LEFT);
+        	break;
+        case KeyEvent.VK_RIGHT:
+        	snake.setDirection(Direction.RIGHT);
+        	break;
+        }
         
 
     }
@@ -114,9 +127,7 @@ public class SnakeGame implements ActionListener, KeyListener {
          * Create a new Location object that is set to a random location between
          * 0 and the WIDTH and HEIGHT variables.
          */
-
-        
-
+    	
         /*
          * Set the foodLocation member variable equal to the Location object you
          * just created.
@@ -124,22 +135,24 @@ public class SnakeGame implements ActionListener, KeyListener {
          * Use the Snake class's isLocationOnSnake method to make sure you don't
          * put the food on top of the snake.
          */
-
-
+    	foodLocation = new Location(new Random().nextInt(WIDTH), new Random().nextInt(HEIGHT));
+    	if (snake.isLocationOnSnake(foodLocation)) {
+    		setFoodLocation();
+    	}
     }
 
     private void gameOver() {
 
         // Stop the timer member variable.
-
+    	timer.stop();
 
         
         // Tell the user their snake is dead.
-
+    	JOptionPane.showMessageDialog(null, "Your snake is dead.");
 
 
         // Ask the user if they want to play again.
-
+    	int again = JOptionPane.showOptionDialog(null, "Do you want to play again?", "Again?", 0, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Yes", "No"}, 0);
         
 
         /*

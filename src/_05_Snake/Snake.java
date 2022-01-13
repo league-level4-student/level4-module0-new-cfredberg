@@ -39,6 +39,28 @@ public class Snake {
 
         int nextX;
         int nextY;
+        
+        switch (currentDirection) {
+        case UP:
+        	nextX = head.getLocation().getX();
+        	nextY = head.getLocation().getY()-1;
+        	break;
+        case DOWN:
+        	nextX = head.getLocation().getX();
+        	nextY = head.getLocation().getY()+1;
+        	break;
+        case LEFT:
+        	nextX = head.getLocation().getX()-1;
+        	nextY = head.getLocation().getY();
+        	break;
+        case RIGHT:
+        	nextX = head.getLocation().getX()+1;
+        	nextY = head.getLocation().getY();
+        	break;
+        default:
+        	nextX = 0;
+        	nextY = 0;
+        }
 
         
         /*
@@ -49,6 +71,9 @@ public class Snake {
          * head of the snake (index 0) or you will go out of bounds.
          */
         
+        for (int i = snake.size()-1; i > 0; i--) {
+        	snake.set(i, snake.get(i-1));
+        }
         
 
         /*
@@ -57,11 +82,11 @@ public class Snake {
          * location.
          */
         
-        
+        head.setLocation(new Location(nextX, nextY));
 
         // Set the canMove member variable to true.
 
-
+        canMove = true;
 
     }
 
@@ -75,9 +100,34 @@ public class Snake {
          * Hint: Use the isOppositeDirection method to check if Direction d is
          * opposite.
          */
-        
-        
-
+        if (canMove) {
+	    	switch (direction) {
+	    	case UP:
+	    		if (currentDirection != Direction.DOWN) {
+	    			currentDirection = direction;
+	    			canMove = false;
+	    		}
+	    		break;
+	    	case DOWN:
+	    		if (currentDirection != Direction.UP) {
+	    			currentDirection = direction;
+	    			canMove = false;
+	    		}
+	    		break;
+	    	case LEFT:
+	    		if (currentDirection != Direction.RIGHT) {
+	    			currentDirection = direction;
+	    			canMove = false;
+	    		}
+	    		break;
+	    	case RIGHT:
+	    		if (currentDirection != Direction.LEFT) {
+	    			currentDirection = direction;
+	    			canMove = false;
+	    		}
+	    		break;
+	    	}
+        }
     }
 
     private boolean isOppositeDirection(Direction direction) {
@@ -99,7 +149,7 @@ public class Snake {
 
         // Clear the snake.
 
-        
+        snake.clear();
         
         /*
          * Create a new Location object for the head at SnakeGame.WIDTH / 2,
@@ -112,11 +162,11 @@ public class Snake {
          * the Location created in step 2 for the Location and the BODY_SIZE
          * constant for the size.
          */
-
+        head = new SnakeSegment(new Location(SnakeGame.WIDTH/2, SnakeGame.HEIGHT/2), BODY_SIZE);
 
 
         // Add the head to the snake.
-
+        snake.add(head);
 
 
     }
@@ -127,9 +177,13 @@ public class Snake {
          * Complete the method so it returns true if the head of the snake is
          * outside of the window and false otherwise.
          */
+    	if (head.getLocation().getX() < SnakeGame.WIDTH && head.getLocation().getX() >= 0) {
+    		if (head.getLocation().getY() < SnakeGame.HEIGHT && head.getLocation().getY() >= 0) {
+    			return false;
+    		}
+    	}
 
-
-        return false;
+        return true;
         
     }
 
@@ -139,7 +193,11 @@ public class Snake {
          * Complete the method so it returns true if the head is located in the
          * same location as any other body segment.
          */
-
+    	for (int i = 1; i < snake.size(); i++) {
+    		if (head.getLocation() == snake.get(i).getLocation()) {
+    			return true;
+    		}
+    	}
         
         return false;
     }
@@ -150,6 +208,11 @@ public class Snake {
          * Complete the method so it returns true if the passed in location is
          * located on the snake.
          */
+    	for (int i = 0; i < snake.size(); i++) {
+    		if (loc == snake.get(i).getLocation()) {
+    			return true;
+    		}
+    	}
 
         return false;
     }

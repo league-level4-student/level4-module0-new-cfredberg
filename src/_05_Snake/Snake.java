@@ -72,7 +72,7 @@ public class Snake {
          */
         
         for (int i = snake.size()-1; i > 0; i--) {
-        	snake.set(i, snake.get(i-1));
+        	snake.get(i).setLocation(snake.get(i-1).getLocation());
         }
         
 

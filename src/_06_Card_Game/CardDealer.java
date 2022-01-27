@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class CardDealer {
     
-    ArrayList<Card> deck;
+    ArrayList<Card> deck = new ArrayList<Card>();
     public void newDeck() {
     	for (int i = 0; i < Card.Rank.values().length; i++) {
     		for (int j = 0; j < Card.Suit.values().length; j++) {
@@ -15,7 +15,7 @@ public class CardDealer {
     }
     
     public void shuffle() {
-    	ArrayList<Card> tempDeck = null;
+    	ArrayList<Card> tempDeck = new ArrayList<Card>();
     	for (int i = 0; i < deck.size(); i++) {
     		int size = 52-i;
     		int rndNum = new Random().nextInt(size);

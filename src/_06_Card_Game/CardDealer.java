@@ -26,6 +26,10 @@ public class CardDealer {
     }
     
     public Card draw() {
+    	if (deck.size() == 0) {
+    		newDeck();
+    		shuffle();
+    	}
 		Card card = deck.get(0);
 		deck.remove(0);
 		return card;

@@ -11,14 +11,17 @@ public class BlackJack {
 	CardDealer dealer = new CardDealer();
 	int computerScore = 0;
 	int playerScore = 0;
-	int bustTotal = 0;
-	int dealerBustTotal = 0;
 	int moveTotal = 0;
+	int dealerMoveTotal = 0;
 	public void run() {
 		JOptionPane.showMessageDialog(null, "Welcome to BlackJack!");
-		dealer.newDeck();
-		dealer.shuffle();
-		round();
+		boolean quit = false;
+		while (!quit) {
+			dealer.newDeck();
+			dealer.shuffle();
+			round();
+			quit = !showWinner();
+		}
 	}
 	
 	public void round() {
@@ -38,12 +41,11 @@ public class BlackJack {
 			}
 			int handTotal = myHandTotal(myHand);
 			if (handTotal > 21) {
-				bustTotal = handTotal;
 				moveOver = true;
+				JOptionPane.showMessageDialog(null, "The dealer is showing a " + dealerHand.get(0).getRank() + " of " + dealerHand.get(0).getSuit() + ".\nYou Busted.\nYour hand is " + myHandString(myHand) + ".");
 			}
 			moveTotal = handTotal;
 		}
-		JOptionPane.showMessageDialog(null, "The dealer is showing a " + dealerHand.get(0).getRank() + " of " + dealerHand.get(0).getSuit() + ".\nYou Busted.\nYour hand is " + myHandString(myHand) + ".");
 		//Dealer's Turn
 		moveOver = false;
 		while (!moveOver) {
@@ -62,11 +64,9 @@ public class BlackJack {
 			}
 			int handTotal = myHandTotal(myHand);
 			if (handTotal > 21) {
-////////////////////////////////Start Here/////////////////////////////////////////////////////////////
-				dealerBustTotal = handTotal;
 				moveOver = true;
 			}
-			moveTotal = handTotal;
+			dealerMoveTotal = handTotal;
 		}
 	}
 	
@@ -91,5 +91,35 @@ public class BlackJack {
 			runningTotal = runningTotal + myHand.get(i).getRank().value;
 		}
 		return runningTotal;
+	}
+	public boolean showWinner() {
+		int result = 0;
+		if (moveTotal > dealerMoveTotal) {
+			if (moveTotal <= 21) {
+				result = JOptionPane.showOptionDialog(null, "You Win! You had a higher total! Would you like to play again?", "You Win!", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Yes", "No"}, 0);
+			}else if (moveTotal > 21 && dealerMoveTotal <= 21) {
+				result = JOptionPane.showOptionDialog(null, "You Lose. You Busted. Would you like to play again?", "You Lose.", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Yes", "No"}, 0);
+			}else {
+				result = JOptionPane.showOptionDialog(null, "You have both busted. Would you like to play again?", "Both Busted.", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Yes", "No"}, 0);
+			}
+		}else if (moveTotal < dealerMoveTotal) {
+			if (dealerMoveTotal <= 21) {
+				result = JOptionPane.showOptionDialog(null, "You Lose. The dealer had a higher total. Would you like to play again?", "You Lose.", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Yes", "No"}, 0);
+			}else if (dealerMoveTotal > 21 && moveTotal <= 21) {
+				result = JOptionPane.showOptionDialog(null, "You Win! The dealer busted! Would you like to play again?", "You Win!", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Yes", "No"}, 0);
+			}else {
+				result = JOptionPane.showOptionDialog(null, "You have both busted. Would you like to play again?", "Both Busted.", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Yes", "No"}, 0);
+			}
+		}else {
+			if (moveTotal > 21 && dealerMoveTotal > 21) {
+				result = JOptionPane.showOptionDialog(null, "You have both busted. Would you like to play again?", "Both Busted.", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Yes", "No"}, 0);
+			}else {
+				result = JOptionPane.showOptionDialog(null, "You have tied the dealer. Would you like to play again?", "Tied.", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[] {"Yes", "No"}, 0);
+			}
+		}
+		if (result == 0) {
+			return true;
+		}
+		return false;
 	}
 }
